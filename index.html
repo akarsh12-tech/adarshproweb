@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ADARSH PROPERTY & CONSTRUCTION</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <style>
+        /* ================= GLOBAL STYLES ================= */
+        * { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins',sans-serif; }
+        html { scroll-behavior:smooth; }
+        body { background:#f7f9fc; color:#222; overflow-x:hidden; line-height:1.7; padding-top:90px; transition: 0.3s; }
+        :root { --primary:#0B3D91; --secondary:#ff9800; --dark:#111; --light:#ffffff; --gray:#666; }
+        .container { width:90%; max-width:1300px; margin:auto; }
+        a { text-decoration:none; transition:.4s; }
+        ul { list-style:none; }
+        
+        /* Buttons */
+        .btn { display:inline-block; padding:14px 35px; background:var(--secondary); color:white; border-radius:40px; font-size:16px; font-weight:600; border:none; cursor:pointer; }
+        .btn:hover { background:#e68900; transform:translateY(-3px); }
+        .btn-outline { display:inline-block; padding:14px 35px; border:2px solid white; color:white; border-radius:40px; margin-left:15px; }
+        .btn-outline:hover { background:white; color:var(--primary); }
+
+        /* ================= HEADER & NAV ================= */
+        .header { position:fixed; top:0; left:0; width:100%; background:white; box-shadow:0 3px 15px rgba(0,0,0,.08); z-index:999; transition: 0.3s; }
+        .header.sticky { box-shadow: 0 8px 20px rgba(0,0,0,0.15); }
+        .header .container { display:flex; justify-content:space-between; align-items:center; height:90px; }
+        .logo h2 { font-size:26px; color:var(--primary); font-weight:800; line-height:1.2; }
+        .logo span { display:block; font-size:11px; color:var(--secondary); letter-spacing:2px; }
+        .navbar ul { display:flex; gap:25px; align-items: center; }
+        .navbar a { color:#222; font-size:15px; font-weight:600; position:relative; }
+        .navbar a::after { content:""; position:absolute; left:0; bottom:-8px; width:0; height:3px; background:var(--secondary); transition:.4s; }
+        .navbar a:hover::after, .navbar .active::after { width:100%; }
+        .menu-btn { display:none; font-size:30px; cursor:pointer; color:var(--primary); }
+        .dark-toggle { background:none; border:none; cursor:pointer; font-size:16px; font-weight:600; color:inherit; }
+
+        /* ================= HERO ================= */
+        .hero { height:calc(100vh - 90px); position:relative; background-size:cover !important; background-position:center !important; display:flex; align-items:center; transition: background-image 0.8s ease-in-out; }
+        .hero-overlay { position:absolute; inset:0; background:rgba(0,0,0,.55); }
+        .hero .container { position:relative; z-index:2; }
+        .hero-content { width:700px; color:white; }
+        .tagline { display:inline-block; background:rgba(255,255,255,.15); padding:8px 20px; border-radius:50px; margin-bottom:20px; letter-spacing:2px; font-size:14px; }
+        .hero-content h1 { font-size:55px; line-height:1.2; margin-bottom:25px; font-weight:800; }
+        .hero-content p { font-size:18px; margin-bottom:35px; color:#eee; }
+
+        /* ================= SECTIONS ================= */
+        .section-title { text-align:center; margin-bottom:70px; }
+        .section-title span { color:var(--secondary); font-weight:700; letter-spacing:2px; }
+        .section-title h2 { font-size:40px; margin-top:15px; color:var(--primary); }
+        
+        .features, .about-home, .properties-home, .testimonials, .brands { padding:100px 0; background:white; }
+        .services-home, .contact-preview { padding:100px 0; background:#f8f9fc; }
+        .process { padding:100px 0; background:#f5f7fc; }
+
+        /* Grids & Cards */
+        .feature-grid, .services-grid, .process-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:30px; }
+        .property-grid, .testimonial-slider { display:grid; grid-template-columns:repeat(3,1fr); gap:35px; }
+        
+        .feature-card, .service-card, .property-card, .process-card, .testimonial-card { background:#fff; text-align:center; padding:40px 25px; border-radius:15px; box-shadow:0 10px 30px rgba(0,0,0,.08); }
+        .feature-card i, .service-icon { font-size:50px; color:var(--secondary); margin-bottom:25px; }
+        .service-icon { width:80px; height:80px; background:var(--primary); color:white; border-radius:50%; display:flex; align-items:center; justify-content:center; margin:auto; font-size:30px; }
+        
+        .property-card { overflow:hidden; text-align:left; padding:0; }
+        .property-img{
+    width:100%;
+    height:250px;
+    overflow:hidden;
+    border-radius:10px 10px 0 0;
+}
+
+.property-img img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+}
+
+.property-card{
+    overflow:hidden;
+}
+        .property-content { padding:25px; }
+        .property-content h4 { color:var(--secondary); font-size:26px; margin:15px 0; }
+
+        .process-card .number { width:70px; height:70px; background:var(--secondary); color:white; border-radius:50%; display:flex; align-items:center; justify-content:center; margin:auto; font-size:26px; font-weight:bold; margin-bottom:25px; }
+
+        /* Counter Section */
+        .counter { background:linear-gradient(135deg,#0B3D91,#0A2F6B); color:#fff; padding:80px 0; }
+        .counter .container { display:grid; grid-template-columns:repeat(4,1fr); gap:30px; }
+        .counter-box { text-align:center; }
+        .counter-box h2 { font-size:50px; font-weight:800; color:var(--secondary); margin-bottom:10px; }
+
+        /* About Section */
+        .about-home .container { display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center; }
+        .about-image { min-height:480px; background:url('https://thumbs.dreamstime.com/b/green-eco-house-environmental-background-field-future-residential-building-plot-72005582.jpg') center/cover; border-radius:20px; box-shadow:0 20px 40px rgba(0,0,0,.15); cursor:pointer; }
+        .about-content ul { margin: 20px 0 30px; }
+        .about-content ul li { padding:8px 0; font-size:16px; }
+
+        /* CTA */
+        .cta { background:linear-gradient(rgba(11,61,145,0.9), rgba(11,61,145,0.9)), url('https://media.istockphoto.com/id/1338567665/photo/land-or-landscape-of-green-field-in-aerial-view-and-home-or-house-icon.jpg?s=612x612&w=0&k=20&c=_TPrBi10tEtIJXEAJLuRPY6uZrh_wU0YbkCSJJCJa5w=') center/cover; color:white; padding:80px 0; text-align:center; }
+        .cta h2 { font-size:36px; margin-bottom:15px; }
+        .cta p { margin-bottom:30px; opacity:0.9; }
+
+        /* Contact Section */
+        .contact-preview .container { display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center; }
+        .info-box { display:flex; align-items:center; margin-bottom:25px; }
+        .info-box i { width:55px; height:55px; background:var(--primary); color:#fff; border-radius:50%; display:flex; align-items:center; justify-content:center; margin-right:20px; font-size:20px; }
+        .contact-right { background:#fff; padding:40px; border-radius:20px; box-shadow:0 15px 35px rgba(0,0,0,.08); }
+        .contact-right input, .contact-right textarea { width:100%; padding:16px; margin-bottom:20px; border:1px solid #ddd; border-radius:10px; outline:none; }
+
+        /* Filter Controls */
+        .filter-controls { margin-top:30px; display:flex; flex-direction:column; gap:15px; align-items:center; }
+        .filter-controls input { padding:12px 20px; width:100%; max-width:400px; border-radius:30px; border:1px solid #ddd; outline:none; }
+        .filter-btns { display:flex; gap:10px; }
+        .filter-btn { padding:8px 20px; border-radius:20px; border:1px solid var(--primary); background:transparent; color:var(--primary); cursor:pointer; font-weight:600; text-transform:capitalize; }
+        .filter-btn.active { background:var(--primary); color:white; }
+
+        /* Brands Group */
+        .brand-grid { display:flex; justify-content:space-around; align-items:center; flex-wrap:wrap; gap:20px; }
+        .brand-item { font-weight:bold; color:#aaa; font-size:18px; text-transform:uppercase; }
+
+        /* Footer */
+        .footer { background:#111827; color:#ddd; padding:80px 0 20px; }
+        .footer-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:40px; }
+        .footer h2, .footer h3 { color:#fff; margin-bottom:20px; }
+        .footer ul li { margin-bottom:12px; }
+        .footer ul li a { color:#bbb; }
+        .footer ul li a:hover { color:var(--secondary); padding-left:8px; }
+        .social-icons { display:flex; gap:15px; margin-top:20px; }
+        .social-icons a { width:45px; height:45px; border-radius:50%; background:var(--primary); color:#fff; display:flex; justify-content:center; align-items:center; }
+        .footer hr { margin:40px 0 20px; border:none; border-top:1px solid rgba(255,255,255,.15); }
+        .copyright { text-align:center; }
+
+        /* Floating Widgets */
+        #topBtn { position:fixed; right:25px; bottom:25px; width:55px; height:55px; border:none; border-radius:50%; background:var(--primary); color:#fff; cursor:pointer; font-size:20px; display:none; justify-content:center; align-items:center; z-index:100; }
+        .whatsapp { position:fixed; left:25px; bottom:25px; width:60px; height:60px; background:#25D366; color:#fff; border-radius:50%; display:flex; justify-content:center; align-items:center; font-size:30px; z-index:999; }
+
+        /* Scroll Animation Engine Styles */
+        .reveal { opacity: 0; transform: translateY(40px); transition: all 0.6s ease-out; }
+        .reveal.show { opacity: 1; transform: translateY(0); }
+
+        /* Dark Mode Configurations */
+        body.dark { background-color: #1a1a1a; color: #f5f5f5; }
+        body.dark .header, body.dark .feature-card, body.dark .service-card, body.dark .property-card, body.dark .process-card, body.dark .contact-right, body.dark .features, body.dark .properties-home, body.dark .testimonials, body.dark .about-home { background: #2d2d2d; color: #fff; }
+        body.dark .services-home, body.dark .process, body.dark .contact-preview, body.dark .testimonial-card { background: #222; }
+        body.dark h2, body.dark h3, body.dark .navbar a { color: #fff; }
+
+        /* ================= RESPONSIVE ================= */
+        @media(max-width:1200px){ .feature-grid, .services-grid, .process-grid, .property-grid, .footer-grid { grid-template-columns:repeat(2,1fr); } }
+        @media(max-width:992px) {
+            .menu-btn { display:block; } .navbar { position:absolute; top:90px; left:0; width:100%; background:#fff; max-height:0; overflow:hidden; transition:max-height 0.4s ease-in-out; box-shadow:0 10px 15px rgba(0,0,0,0.05); }
+            .navbar.active { max-height:500px; } .navbar ul { flex-direction:column; gap:0; padding:20px 5%; } .navbar ul li a { display:block; padding:12px 0; border-bottom:1px solid #f5f5f5; }
+            .hero-content { width:100%; text-align:center; } .hero-content h1 { font-size:48px; } .about-home .container, .contact-preview .container { grid-template-columns:1fr; }
+        }
+        @media(max-width:768px){ .feature-grid, .services-grid, .property-grid, .process-grid, .testimonial-slider, .counter .container, .footer-grid { grid-template-columns:1fr; } .hero-content h1 { font-size:38px; } }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header class="header">
+        <div class="container">
+            <div class="logo"><h2>ADARSH<span>PROPERTY & CONSTRUCTION</span></h2></div>
+            <nav class="navbar">
+                <ul>
+                    <li><a href="#" class="active">Home</a></li>
+                    <li><a href="#about">About Us</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#properties">Properties</a></li>
+                    <li><a href="#process">Process</a></li>
+                    <li><button class="dark-toggle" id="darkModeBtn"><i class="fa-solid fa-moon"></i> Theme</button></li>
+                </ul>
+            </nav>
+            <div class="menu-btn"><i class="fa-solid fa-bars"></i></div>
+        </div>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero" id="heroSection">
+        <div class="hero-overlay"></div>
+        <div class="container">
+            <div class="hero-content">
+                <span class="tagline">BUILDING TRUST SINCE 2008</span>
+                <h1>Building Dreams,<br>Creating Landmarks</h1>
+                <p>ADARSH PROPERTY & CONSTRUCTION में हम प्रॉपर्टी खरीद-बिक्री, प्लॉट, आवासीय एवं व्यावसायिक परियोजनाओं के साथ उच्च गुणवत्ता वाली निर्माण सेवाएँ प्रदान करते हैं। हमारा उद्देश्य है आपके हर सपने को विश्वास, पारदर्शिता और उत्कृष्टता के साथ साकार करना।</p>
+                <a href="#properties" class="btn">Explore Properties</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FEATURES -->
+    <section class="features">
+        <div class="container">
+            <div class="section-title"><span>WHY CHOOSE US</span><h2>We Build More Than Buildings</h2></div>
+            <div class="feature-grid">
+                <div class="feature-card reveal"><i class="fa-solid fa-building"></i><h3>Residential</h3><p>Beautiful homes built with modern architecture.</p></div>
+                <div class="feature-card reveal"><i class="fa-solid fa-city"></i><h3>Commercial</h3><p>Offices and complexes delivered on time.</p></div>
+                <div class="feature-card reveal"><i class="fa-solid fa-house"></i><h3>Consultancy</h3><p>Buy, sell and invest with expert guidance.</p></div>
+                <div class="feature-card reveal"><i class="fa-solid fa-award"></i><h3>Premium Quality</h3><p>Strict structural engineering excellence.</p></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- COUNTER -->
+    <!-- Property Counter Section -->
+<section class="counter">
+    <div class="container">
+
+        <div class="counter-box">
+            <h2 class="counter-number" data-target="250">0+</h2>
+            <p>Properties Sold</p>
+        </div>
+
+        <div class="counter-box">
+            <h2 class="counter-number" data-target="500">0+</h2>
+            <p>Happy Families</p>
+        </div>
+
+        <div class="counter-box">
+            <h2 class="counter-number" data-target="50">0+</h2>
+            <p>Premium Projects</p>
+        </div>
+
+        <div class="counter-box">
+            <h2 class="counter-number" data-target="18">0+</h2>
+            <p>Years of Excellence</p>
+        </div>
+
+    </div>
+</section>
+
+    <!-- ABOUT -->
+    <section id="about" class="about-home">
+        <div class="container">
+            <div class="about-image reveal" id="aboutImg"></div>
+            <div class="about-content reveal">
+                <span>ABOUT COMPANY</span>
+                <h2>Your Trusted Property & Construction Partner</h2>
+                <p><strong>ADARSH PROPERTY & CONSTRUCTION</strong> केवल एक रियल एस्टेट एवं निर्माण कंपनी नहीं, बल्कि आपके सपनों को साकार करने वाला एक विश्वसनीय साझेदार है। वर्षों के अनुभव, ईमानदारी और पारदर्शिता के साथ हम आवासीय एवं व्यावसायिक प्रॉपर्टी, प्लॉट, भूमि निवेश और आधुनिक निर्माण सेवाओं में उत्कृष्ट समाधान प्रदान करते हैं। हमारा लक्ष्य केवल एक प्रॉपर्टी उपलब्ध कराना नहीं, बल्कि आपके लिए ऐसा भविष्य तैयार करना है जो सुरक्षित, मूल्यवान और आपकी अपेक्षाओं से कहीं अधिक हो।
+                    
+                    <br>
+                    <br>प्लॉट्स उपलब्ध: रिसली | बोरसी | धनोरा | उमरपोटी | पुरई | बोरीगारिका | सेलूद.</p>
+                <ul>
+    <li>✔ आवासीय एवं व्यावसायिक प्रॉपर्टी</li>
+    <li>✔ प्लॉट, भूमि एवं निवेश संबंधी परामर्श</li>
+    <li>✔ गुणवत्तापूर्ण मकान एवं भवन निर्माण</li>
+    <li>✔ प्रॉपर्टी खरीदने एवं बेचने में संपूर्ण सहायता</li>
+    <li>✔ गृह नवीनीकरण एवं आधुनिक इंटीरियर समाधान</li>
+    <li>✔ पारदर्शी प्रक्रिया एवं एंड-टू-एंड विशेषज्ञ परामर्श</li>
+</ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section id="services" class="services-home">
+        <div class="container">
+            <div class="section-title"><span>OUR SERVICES</span><h2>Professional Construction Solutions</h2></div>
+            <div class="services-grid">
+                <div class="service-card reveal"><div class="service-icon"><i class="fa-solid fa-house"></i></div><h3>House Construction</h3></div>
+                <div class="service-card reveal"><div class="service-icon"><i class="fa-solid fa-building"></i></div><h3>Commercial Projects</h3></div>
+                <div class="service-card reveal"><div class="service-icon"><i class="fa-solid fa-paint-roller"></i></div><h3>Interior Design</h3></div>
+                <div class="service-card reveal"><div class="service-icon"><i class="fa-solid fa-hammer"></i></div><h3>Renovation</h3></div>
+            </div>
+        </div>
+    </section>
+    <section id="services" class="services-home">
+    <div class="container">
+        <div class="section-title">
+            
+            <h2>Professional Property Solutions</h2>
+        </div>
+
+        <div class="services-grid">
+            <div class="service-card reveal">
+                <div class="service-icon">
+                    <i class="fa-solid fa-house"></i>
+                </div>
+                <h3>Residential Properties</h3>
+            </div>
+
+            <div class="service-card reveal">
+                <div class="service-icon">
+                    <i class="fa-solid fa-building"></i>
+                </div>
+                <h3>Commercial Properties</h3>
+            </div>
+
+            <div class="service-card reveal">
+                <div class="service-icon">
+                    <i class="fa-solid fa-map-location-dot"></i>
+                </div>
+                <h3>Plots & Land</h3>
+            </div>
+
+            <div class="service-card reveal">
+                <div class="service-icon">
+                    <i class="fa-solid fa-key"></i>
+                </div>
+                <h3>Property Buying & Selling</h3>
+            </div>
+        </div>
+    </div>
+</section>
+
+    <!-- PROPERTIES -->
+<section id="properties" class="properties-home">
+    <div class="container">
+
+        <div class="section-title">
+            <span>FEATURED PROPERTIES</span>
+            <h2>Latest Property Listings</h2>
+
+            <div class="filter-controls">
+                <input type="text" id="propertySearch" placeholder="Search properties...">
+
+                <div class="filter-btns">
+                    <button class="filter-btn active" data-filter="all">All</button>
+                    <button class="filter-btn" data-filter="residential">Residential</button>
+                    <button class="filter-btn" data-filter="commercial">Commercial</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="property-grid">
+
+            <!-- Property 1 -->
+            <div class="property-card reveal residential">
+                <div class="property-img">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTXyzD9YXM4ZLrm8jbTve6Yn4pBBnLjZnJS0Fpq1z_wagZvp3wK5bjMO9-7&s=10" alt="Luxury Farmhouse">
+                </div>
+
+                <div class="property-content">
+                    <h3>Luxury  Farmhouse</h3>
+                    <p>• Garden • Swimming Pool
+                    <br><br>📍 Umarpoti,Purai,Patora,Chhattisgarh</p>
+                </div>
+            </div>
+
+            <!-- Property 2 -->
+            <div class="property-card reveal residential">
+                <div class="property-img">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRfkia2LI1m2N027XeDG_tgbfb-5n_d6Tx-4LYFMRtSQlpWioePq3tzydc&s=10" alt="Modern House">
+                </div>
+
+                <div class="property-content">
+                    <h3>Modern Apartment</h3>
+                    <p>3 BHK • Near 2.5km D-Mart• Main Road
+                        <br>📍 Umarpoti,Purai,Patora,Chhattisgarh
+                    </p>
+                    <h4>₹ 35 Lakhs</h4>
+                </div>
+            </div>
+
+            <!-- Property 3 -->
+            <div class="property-card reveal commercial">
+                <div class="property-img">
+                    <img src="https://apollo.olx.in/v1/files/nggmnva89o741-IN/image" alt="Commercial Complex">
+                </div>
+
+                <div class="property-content">
+                    <h3>Commercial Complex</h3>
+                    <p>Prime Office Space • Parking</p>
+                    <h4>Contact for Details</h4>
+                    
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+    <!-- PROCESS -->
+    <section id="process" class="process">
+        <div class="container">
+            <div class="section-title"><span>OUR PROCESS</span><h2>How We Work</h2></div>
+            <div class="process-grid">
+                <div class="process-card reveal"><div class="number">01</div><h3>Consultation</h3></div>
+                <div class="process-card reveal"><div class="number">02</div><h3>Planning</h3></div>
+                <div class="process-card reveal"><div class="number">03</div><h3>Construction</h3></div>
+                <div class="process-card reveal"><div class="number">04</div><h3>Delivery</h3></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TESTIMONIALS -->
+    <section id="testimonials" class="testimonials">
+        <div class="container">
+            <div class="section-title"><span>CLIENT TESTIMONIALS</span><h2>What Our Clients Say</h2></div>
+            <div class="testimonial-slider">
+                <div class="testimonial-card reveal" style="display:block;"><p>"Excellent workmanship and professional service."</p><h4>Rahul Sharma</h4></div>
+                <div class="testimonial-card reveal" style="display:none;"><p>"Highly recommended for commercial builds."</p><h4>Anita Verma</h4></div>
+                <div class="testimonial-card reveal" style="display:none;"><p>"Very satisfied with their renovation work."</p><h4>Suresh Patel</h4></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta">
+        <div class="container">
+            <h2>Ready To Build Your Dream Project?</h2>
+            <p>Contact our experts today for a free consultation and quotation.</p>
+            <a href="#contact" class="btn">Get Free Consultation</a>
+        </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="contact-preview">
+        <div class="container">
+            <div class="contact-left">
+                <span>GET IN TOUCH</span><h2>Let's Build Together</h2>
+                <div class="info-box"><i class="fa-solid fa-location-dot"></i><p>Umarpoti Main Road Bhilai, Chhattisgarh, India</p></div>
+                <div class="info-box"><i class="fa-solid fa-phone"></i><p>+91 7999181726,9302268017</p></div>
+            </div>
+            <div class="contact-right">
+                <form id="contactForm">
+                    <input type="text" placeholder="Your Name" required>
+                    <input type="email" placeholder="Email Address" required>
+                    <textarea rows="5" placeholder="Your Project Details"></textarea>
+                    <button type="submit" class="btn">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- BRANDS -->
+    <section class="brands">
+        <div class="container"><div class="brand-grid"><div class="brand-item">Brand 1</div><div class="brand-item">Brand 2</div><div class="brand-item">Brand 3</div><div class="brand-item">Brand 4</div></div></div>
+    </section>
+
+    <!-- MAP -->
+    <section class="map">
+       <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d14884.401598853823!2d81.34545665198401!3d21.148402388493516!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sin!4v1783524358910!5m2!1sen!2sin" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col"><h2>ADARSH</h2><p>Building quality since 2008.</p></div>
+                <div class="footer-col"><h3>Links</h3><ul><li><a href="#">Home</a></li><li><a href="#about">About</a></li></ul></div>
+                <div class="footer-col"><h3>Contact</h3><p>adarshproperty2008@gmail.com</p></div>
+            </div>
+            <hr><p class="copyright">© 2026 ADARSH PROPERTY & CONSTRUCTION | All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <button id="topBtn"><i class="fa-solid fa-arrow-up"></i></button>
+    <a href="https://wa.me/919302268017?text=Hello%20Adarsh%20Property%20%26%20Construction,%20I%20am%20interested%20in%20your%20property%20and%20construction%20services.%20Please%20share%20more%20details." class="whatsapp" target="_blank">
+    <i class="fab fa-whatsapp"></i>
+</a>
+
+    <!-- ================= JAVASCRIPT ================= -->
+    <script>
+        // Hero background image cycler
+        const heroSection = document.getElementById("heroSection");
+        const heroImages = [
+            "https://media.istockphoto.com/id/1338567665/photo/land-or-landscape-of-green-field-in-aerial-view-and-home-or-house-icon.jpg?s=612x612&w=0&k=20&c=_TPrBi10tEtIJXEAJLuRPY6uZrh_wU0YbkCSJJCJa5w=",
+            "https://images.unsplash.com/photo-1504307651254-35680f356dfd?q=80&w=1920",
+            "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=1920"
+        ];
+        let heroIdx = 0;
+        function rotateHero() {
+            if(heroSection) {
+                heroSection.style.background = `linear-gradient(rgba(0,0,0,.55),rgba(0,0,0,.55)), url('${heroImages[heroIdx]}')`;
+                heroIdx = (heroIdx + 1) % heroImages.length;
+            }
+        }
+        rotateHero();
+        setInterval(rotateHero, 5000);
+
+        // Mobile Menu toggle 
+        const menuBtn = document.querySelector(".menu-btn");
+        const navbar = document.querySelector(".navbar");
+        menuBtn.addEventListener("click", () => navbar.classList.toggle("active"));
+
+        // Sticky Header & Back to top visibility logic
+        const header = document.querySelector(".header");
+        const topBtn = document.getElementById("topBtn");
+        window.addEventListener("scroll", () => {
+            if(window.scrollY > 100) header.classList.add("sticky"); else header.classList.remove("sticky");
+            if(window.scrollY > 500) topBtn.style.display = "flex"; else topBtn.style.display = "none";
+        });
+        topBtn.addEventListener("click", () => window.scrollTo({top:0, behavior:"smooth"}));
+
+        // Dark Mode Engine 
+        document.getElementById("darkModeBtn").addEventListener("click", () => document.body.classList.toggle("dark"));
+
+        // Contact Form Processing
+        document.getElementById("contactForm").addEventListener("submit", (e) => {
+            e.preventDefault();
+            alert("Thank you! Your message has been submitted successfully.");
+            e.target.reset();
+        });
+
+        // Testimonial Engine
+        const slides = document.querySelectorAll(".testimonial-card");
+        let slideIdx = 0;
+        setInterval(() => {
+            slides.forEach(s => s.style.display = "none");
+            slideIdx = (slideIdx + 1) % slides.length;
+            slides[slideIdx].style.display = "block";
+        }, 4000);
+
+        // Live Real Estate Card Search and Filtering Engine
+        const searchInput = document.getElementById("propertySearch");
+        const filterBtns = document.querySelectorAll(".filter-btn");
+        const cards = document.querySelectorAll(".property-card");
+
+        function filterProperties() {
+            const query = searchInput.value.toLowerCase();
+            const activeFilter = document.querySelector(".filter-btn.active").dataset.filter;
+
+            cards.forEach(card => {
+                const text = card.innerText.toLowerCase();
+                const matchesSearch = text.includes(query);
+                const matchesFilter = activeFilter === "all" || card.classList.contains(activeFilter);
+
+                if(matchesSearch && matchesFilter) card.style.display = "block"; else card.style.display = "none";
+            });
+        }
+
+        searchInput.addEventListener("keyup", filterProperties);
+        filterBtns.forEach(btn => {
+            btn.addEventListener("click", () => {
+                filterBtns.forEach(b => b.classList.remove("active"));
+                btn.classList.add("active");
+                filterProperties();
+            });
+        });
+
+        // Scroll Reveal Animations & Number Counter Engine via Intersection Observer
+        const revealElements = document.querySelectorAll(".reveal");
+        const counters = document.querySelectorAll(".counter-box h2");
+        let countersAnimated = false;
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if(entry.isIntersecting) {
+                    entry.target.classList.add("show");
+                    if(entry.target.classList.contains("counter") && !countersAnimated) {
+                        countersAnimated = true;
+                        counters.forEach(c => {
+                            const target = +c.dataset.target;
+                            let count = 0;
+                            const step = Math.ceil(target / 50);
+                            const anim = () => {
+                                count += step;
+                                if(count >= target) c.innerText = target + "+"; 
+                                else { c.innerText = count + "+"; requestAnimationFrame(anim); }
+                            };
+                            anim();
+                        });
+                    }
+                }
+            });
+        }, { threshold: 0.1 });
+
+        revealElements.forEach(el => observer.observe(el));
+        observer.observe(document.querySelector(".counter"));
+    </script>
+</body>
+</html>
